@@ -1,4 +1,4 @@
-intesa=== KOPA QR ===
+=== KOPA QR ===
 Contributors: creativform, ivijanstefan, aner1980
 Tags: WooCommerce Dokan, qr code, automatic payment, payments, sopping
 Requires at least: 5.0
