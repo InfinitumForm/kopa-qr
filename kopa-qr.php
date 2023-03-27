@@ -866,8 +866,8 @@ if( !class_exists('Kopa_QR') ) : class Kopa_QR {
 				return;
 			}
 			
-			if ( !is_textdomain_loaded( self::DOMAIN ) ) {
-				load_textdomain( self::DOMAIN );
+			if ( is_textdomain_loaded( self::DOMAIN ) ) {
+				unload_textdomain( self::DOMAIN );
 			}
 			
 			update_option('woocommerce_kopa_custom_img_position', self::DEFAULT_POSITION);
