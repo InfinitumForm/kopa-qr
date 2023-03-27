@@ -6,7 +6,7 @@
  * Description:       KÖPA allows you to add a QR code for automatic payment to WooCommerce products.
  * Version:           1.0.0
  * Requires PHP:      7.0
- * Requires at least: 6.2
+ * Requires at least: 6.0
  * Author:            INFINITUM FORM
  * Author URI:        https://infinitumform.com/
  * License:           GPL v2 or later
@@ -126,6 +126,14 @@ class Kopa_QR
 			$this,
 			'show_on_dokan_edit_page'
 		), 99, 2 );
+		add_action( 'wp_ajax_kopa_qr_dokan_variants', array(
+			$this,
+			'ajax__kopa_qr_dokan_variants'
+		), 10 );
+		add_action( 'wp_ajax_nopriv_kopa_qr_dokan_variants', array(
+			$this,
+			'ajax__kopa_qr_dokan_variants'
+		), 10 );
 	}
 	
 	/*
@@ -186,6 +194,7 @@ class Kopa_QR
 		
 		wp_localize_script( 'kopa-qr', 'kopa_qr', 
 			[
+				'ajaxurl' => admin_url('/admin-ajax.php');
 				'label' => [
 					'copy_to_clipboard' => esc_html__('Copied to clipboard!', 'kopa-qr'),
 					'qr_code' => esc_attr('KÖPA QR', 'kopa-qr')
@@ -509,7 +518,65 @@ class Kopa_QR
 				)
 			);
 		}
-	}	
+	}
+
+	public function ajax__kopa_qr_dokan_variants() {
+		if( $product_id = absint( sanitize_text_field($_POST['product_id'] ?? NULL) ) ) {
+			if( $template = $this->wp_qr_code_template( $product_id ) ) {
+				
+				$data = $this->qr_code_data($product_id);
+				
+				ob_start(); ?>
+<style>
+.kopa-qr-copy-deep-link-container > .kopa-qr-copy-deep-link-input{
+	max-width: 400px;
+	display: inline-block !important;
+}
+.kopa-qr-copy-deep-link-container > .kopa-qr-copy-deep-link {
+	display: inline-block !important;
+}
+</style>
+<div class="dokan-form-group kopa-qr-copy-deep-link-container">
+	<label class="screen-reader-text" for="kopa-qr-deep-link"><?php esc_attr_e('Copy KÖPA QR Deep Link', 'kopa-qr'); ?></label>
+	<input type="text" id="kopa-qr-deep-link" class="dokan-form-control kopa-qr-copy-deep-link-input" size="16" autocomplete="off" value="<?php echo esc_url($data['link']); ?>" role="combobox" readonly="true">
+	<input type="button" class="button kopa-qr-copy-deep-link" value="<?php esc_attr_e('Copy', 'kopa-qr'); ?>">
+</div>
+				<?php
+				$input = ob_get_clean();
+				printf(
+					'<div class="dokan-form-group"><strong class="form-label">%1$s</strong>%2$s</div>%3$s', esc_html__('KÖPA QR', 'kopa-qr'),
+					wp_kses_post( $template ),
+					wp_kses(
+						$input,
+						array_merge( wp_kses_allowed_html('post'), [
+							'input' => [
+								'id' => true,
+								'class' => true,
+								'type' => true,
+								'value' => true,
+								'name' => true,
+								'data-wp-taxonomy' => true,
+								'autocomplete' => true,
+								'aria-expanded' => true,
+								'role' => true,
+								'readonly' => true,
+								'disabled' => true,
+								'style' => true
+							],
+							'label' => [
+								'id' => true,
+								'class' => true,
+								'for' => true
+							],
+							'style' => [
+								'id' => true
+							]
+						])
+					)
+				);
+			}
+		}
+	}
 	
 	/*
 	 * Add default QR code possitions

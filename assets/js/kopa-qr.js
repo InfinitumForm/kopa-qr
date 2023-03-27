@@ -33,6 +33,27 @@
 			$container = $this.closest('li.product');
 		
 		$container.removeClass('kopa-qr-active');
+	})
+	
+	.ready(function(){
+		$('.dokan-variable-attributes input[name^="variable_post_id"]').each(function(){
+			var $this = $(this),
+				$container = $this.closest('.dokan-variable-attributes'),
+				$content = $this.find('.data');
+				
+			$.ajax({
+				url: kopa_qr.ajaxurl,
+				type: 'POST',
+				data: {
+					action: 'kopa_qr_dokan_variants',
+					product_id: $this.val()
+				}
+			}).done(function (data) {
+				if(data) {
+					$content.append(data);
+				}
+			});
+		});
 	});
 	
 }( jQuery || window.jQuery ) );
