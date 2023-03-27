@@ -6,7 +6,7 @@
  * Description:       KÖPA allows you to add a QR code for automatic payment to WooCommerce products.
  * Version:           1.0.0
  * Requires PHP:      7.0
- * Requires at least: 6.0
+ * Requires at least: 5.0
  * Author:            INFINITUM FORM
  * Author URI:        https://infinitumform.com/
  * License:           GPL v2 or later
@@ -16,8 +16,7 @@
  * Contributors:      creativform, ivijanstefan, aner1980
  */
 
-class Kopa_QR
-{
+if( !class_exists('Kopa_QR') ) : class Kopa_QR {
 	// JS Version
 	const JS_VERSION = '1.0.0';
 	
@@ -463,6 +462,10 @@ class Kopa_QR
 	 */
 	function show_on_dokan_edit_page($post, $post_id) {
 		$product = wc_get_product($post);
+		
+		wp_enqueue_script( 'kopa-qr' );
+		wp_enqueue_style( 'kopa-qr' );
+		
 		if( $template = $this->wp_qr_code_template( $product->get_id() ) ) {
 			
 			$data = $this->qr_code_data($post_id);
@@ -899,7 +902,7 @@ class Kopa_QR
         }
         return self::$instance;
     }
-}
+} endif;
 
 // On plugin activation
 Kopa_QR::on_activation();
