@@ -37,7 +37,6 @@
 		$container.removeClass('kopa-qr-active');
 	})
 	
-	// Fix product variants on Dokan
 	.ajaxComplete(function(){
 		if( !dokan_loaded ) {
 			$('.dokan-product-variation-itmes input[name^="variable_post_id"]').each(function(){
@@ -57,7 +56,6 @@
 				}).done(function (data) {
 					if(data) {
 						$content.append(data);
-						$content.find('.button.kopa-qr-copy-deep-link').remove();
 					}
 				});
 			});

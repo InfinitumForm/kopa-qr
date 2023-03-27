@@ -395,11 +395,7 @@ if( !class_exists('Kopa_QR') ) : class Kopa_QR {
 </script>
 	<?php
 		$html = ob_get_clean();
-		echo apply_filters('kopa-qr-admin-copy-to-clipboard-script', wp_kses( $html, [
-			'script' => [
-				'id' => true
-			]
-		] ));
+		echo apply_filters('kopa-qr-admin-copy-to-clipboard-script', $html);
 	}
 
     /*
@@ -465,12 +461,11 @@ if( !class_exists('Kopa_QR') ) : class Kopa_QR {
 		
 		wp_enqueue_script( 'kopa-qr' );
 		wp_enqueue_style( 'kopa-qr' );
+		add_action('wp_footer', [$this, 'copy_to_clipboard'], 99, 0);
 		
 		if( $template = $this->wp_qr_code_template( $product->get_id() ) ) {
 			
 			$data = $this->qr_code_data($post_id);
-			
-			add_action('wp_footer', [$this, 'copy_to_clipboard'], 99, 0);
 			
 			ob_start(); ?>
 <style>

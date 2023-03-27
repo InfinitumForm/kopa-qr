@@ -116,6 +116,11 @@ li.product.kopa-qr-active > .woocommerce-loop-product-kopa-qr-container .kopa-qr
 	max-width: 80%;
 }
 
+.kopa-qr-copy-deep-link-container .kopa-qr-copy-deep-link-input{
+	max-width: 400px;
+    display: inline-block;
+}
+
 @media all and (max-width:768px) {
 	.dokan-theme-twentytwenty li.product > .woocommerce-loop-product-kopa-qr-container > .woocommerce-loop-product-kopa-qr-link img {
 		max-width: 100%;
