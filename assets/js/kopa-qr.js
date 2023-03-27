@@ -7,6 +7,8 @@
 
 ;( function($){
 	
+	var dokan_loaded = false;
+	
 	$(document)
 	
 	// Display QR Code
@@ -35,25 +37,31 @@
 		$container.removeClass('kopa-qr-active');
 	})
 	
-	.ready(function(){
-		$('.dokan-variable-attributes input[name^="variable_post_id"]').each(function(){
-			var $this = $(this),
-				$container = $this.closest('.dokan-variable-attributes'),
-				$content = $this.find('.data');
+	// Fix product variants on Dokan
+	.ajaxComplete(function(){
+		if( !dokan_loaded ) {
+			$('.dokan-product-variation-itmes input[name^="variable_post_id"]').each(function(){
+				dokan_loaded = true;
 				
-			$.ajax({
-				url: kopa_qr.ajaxurl,
-				type: 'POST',
-				data: {
-					action: 'kopa_qr_dokan_variants',
-					product_id: $this.val()
-				}
-			}).done(function (data) {
-				if(data) {
-					$content.append(data);
-				}
+				var $this = $(this),
+					$container = $this.closest('.dokan-product-variation-itmes'),
+					$content = $container.find('.dokan-variable-attributes .data');
+
+				$.ajax({
+					url: kopa_qr.ajaxurl,
+					type: 'POST',
+					data: {
+						action: 'kopa_qr_dokan_variants',
+						product_id: $this.val()
+					}
+				}).done(function (data) {
+					if(data) {
+						$content.append(data);
+						$content.find('.button.kopa-qr-copy-deep-link').remove();
+					}
+				});
 			});
-		});
+		}
 	});
 	
 }( jQuery || window.jQuery ) );
