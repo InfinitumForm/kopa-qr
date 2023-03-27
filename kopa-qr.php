@@ -194,7 +194,7 @@ class Kopa_QR
 		
 		wp_localize_script( 'kopa-qr', 'kopa_qr', 
 			[
-				'ajaxurl' => admin_url('/admin-ajax.php');
+				'ajaxurl' => admin_url('/admin-ajax.php'),
 				'label' => [
 					'copy_to_clipboard' => esc_html__('Copied to clipboard!', 'kopa-qr'),
 					'qr_code' => esc_attr('KÖPA QR', 'kopa-qr')
