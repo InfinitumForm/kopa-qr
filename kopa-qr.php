@@ -4,16 +4,17 @@
  *
  * Plugin Name:       KOPA QR
  * Description:       KÖPA allows you to add a QR code for automatic payment to WooCommerce products.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Requires PHP:      7.0
  * Requires at least: 5.0
- * Author:            INFINITUM FORM
- * Author URI:        https://infinitumform.com/
+ * Author:            KÖPA
+ * Author URI:        https://kopashopping.com/
  * License:           GPL v2 or later
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       kopa-qr
  * Domain Path:       /languages
  * Contributors:      creativform, ivijanstefan, aner1980
+ * Developed By:      Ivijan-Stefan Stipic <infinitumform@gmail.com>
  */
 
 if( !class_exists('Kopa_QR') ) : class Kopa_QR {
@@ -260,7 +261,7 @@ if( !class_exists('Kopa_QR') ) : class Kopa_QR {
 			printf(
 				apply_filters(
 					'kopa-qr-shop-loop-item',
-					'<a href="#" class="woocommerce-loop-product-kopa-qr"><img src="%1$s" alt="%2$s" /></a><div class="woocommerce-loop-product-kopa-qr-container"><button type="button" class="kopa-qr-close" tabindex="0">&times;</button><a href="%3$s" class="woocommerce-loop-product-kopa-qr-link" target="_blank"><img src="%4$s" alt="%5$s" /></a></div>',
+					'<a href="#" class="woocommerce-loop-product-kopa-qr"><img src="%1$s" alt="%2$s" /></a><div class="woocommerce-loop-product-kopa-qr-container"><button type="button" class="kopa-qr-close" tabindex="0">&times;</button><a href="%3$s" class="woocommerce-loop-product-kopa-qr-link"><img src="%4$s" alt="%5$s" /></a></div>',
 					$kopa_id,
 					$data,
 					$product
@@ -305,7 +306,7 @@ if( !class_exists('Kopa_QR') ) : class Kopa_QR {
 	<br>
 	<?php endif; ?>
 	<div class="thickbox kopa-qr-code">
-		<a href="<?php echo esc_url($data['link']); ?>" style="display:block !important;" class="kopa-qr-code-link" target="_blank">
+		<a href="<?php echo esc_url($data['link']); ?>" style="display:block !important;" class="kopa-qr-code-link">
 			<img src="<?php echo esc_url($data['image']); ?>" alt="<?php esc_attr_e('KÖPA QR', 'kopa-qr'); ?>" id="kopa-qr-code-image" style="display:block;width:100%;max-width:<?php echo esc_attr($variation ? 200 : 400); ?>px;height:auto;" />
 		</a>
 	</div>
@@ -349,7 +350,7 @@ if( !class_exists('Kopa_QR') ) : class Kopa_QR {
 
 		if( $data ) {			
 			$html = wp_kses_post(
-				'<p class="kopa-qr-code"><a href="' . esc_url($data['link']) . '" class="kopa-qr-code-link" target="_blank"><img decoding="async" src="' . esc_url($data['image']) . '" alt="' . esc_attr__('KÖPA QR', 'kopa-qr') . '" id="kopa-qr-code-image-' . esc_attr($post_id) . '" style="max-width: ' . esc_attr($this->get_qr_code_size()) . '" /></a></p>'
+				'<p class="kopa-qr-code"><a href="' . esc_url($data['link']) . '" class="kopa-qr-code-link"><img decoding="async" src="' . esc_url($data['image']) . '" alt="' . esc_attr__('KÖPA QR', 'kopa-qr') . '" id="kopa-qr-code-image-' . esc_attr($post_id) . '" style="max-width: ' . esc_attr($this->get_qr_code_size()) . '" /></a></p>'
 			);
 		}
 		

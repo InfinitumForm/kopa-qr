@@ -1,10 +1,12 @@
 === KOPA QR ===
 Contributors: creativform, ivijanstefan, aner1980
-Tags: WooCommerce Dokan, qr code, automatic payment, payments, sopping
+Tags: WooCommerce, Dokan, qr code, automatic payment, payments, sopping, products
 Requires at least: 5.0
 Tested up to: 6.2
 Requires PHP: 7.0
-Stable tag: 1.0.0
+Stable tag: 1.0.1
+Author: KÖPA
+Author URI: https://kopashopping.com/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -47,3 +49,6 @@ To put it simply, the PCI DSS Level 1 is a set of requirements to ensure that co
 
 = 1.0.0 =
 * First stable version
+
+= 1.0.1 =
+* Fixed application linking
